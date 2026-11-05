@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Shop orders | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <a class="linkbtn small" href="{% url 'shops:dashboard' %}">Back to dashboard</a>
+  <h1 style="margin:10px 0 22px">Orders to ship<span class="stop">.</span></h1>
+  {% if page.object_list %}
+  <div class="table-wrap"><table class="table"><thead><tr><th>Order</th><th>Item</th><th>Ship to</th><th>Status</th><th>Action</th></tr></thead><tbody>
+    {% for i in page.object_list %}<tr>
+      <td>{{ i.order.number }}<br><span class="small muted">{{ i.order.paid_at|date:"d M" }}</span></td>
+      <td>{{ i.title }} x {{ i.quantity }}<br><span class="small muted">Earning {{ i.seller_earning_minor|money }}</span></td>
+      <td class="small">{{ i.order.ship_name }}<br>{{ i.order.ship_line1 }} {{ i.order.ship_line2 }}<br>{{ i.order.ship_city }}, {{ i.order.ship_state }} {{ i.order.ship_pincode }}<br>{{ i.order.ship_phone }}</td>
+      <td><span class="badge {% if i.fulfil_status == 'delivered' %}badge-ok{% elif i.fulfil_status == 'shipped' %}badge-warn{% endif %}">{{ i.get_fulfil_status_display }}</span>{% if i.tracking_number %}<br><span class="small muted">{{ i.tracking_number }}</span>{% endif %}</td>
+      <td>{% if i.fulfil_status == 'placed' %}<form method="post" action="{% url 'shops:item_ship' i.pk %}" class="row">{% csrf_token %}<input class="input" style="min-width:150px;min-height:38px" name="tracking_number" placeholder="Tracking no." aria-label="Tracking number"><button class="btn btn-p btn-sm" type="submit">Mark shipped</button></form>
+        {% elif i.fulfil_status == 'shipped' %}<form method="post" action="{% url 'shops:item_delivered' i.pk %}">{% csrf_token %}<button class="btn btn-o btn-sm" type="submit">Mark delivered</button></form>{% else %}Done{% endif %}</td>
+    </tr>{% endfor %}</tbody></table></div>
+  {% if page.has_other_pages %}<div class="pager">{% if page.has_previous %}<a class="btn btn-o btn-sm" href="?page={{ page.previous_page_number }}">Previous</a>{% endif %}{% if page.has_next %}<a class="btn btn-o btn-sm" href="?page={{ page.next_page_number }}">Next</a>{% endif %}</div>{% endif %}
+  {% else %}<div class="notice">No paid orders yet.</div>{% endif %}
+</div></section>
+{% endblock %}

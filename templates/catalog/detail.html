@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}{{ product.title }} | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <div class="pd">
+    <div>{% include "catalog/_art.html" %}</div>
+    <div>
+      <a class="small muted" href="{% url 'catalog:list' %}?category={{ product.category.slug }}">{{ product.category.name }}</a>
+      <h1 style="margin:8px 0 10px;font-size:clamp(1.9rem,4vw,2.8rem)">{{ product.title }}</h1>
+      <p class="muted">by <a class="linkbtn" href="{{ product.shop.get_absolute_url }}">{{ product.shop.name }}</a>{% if product.shop.city %}, {{ product.shop.city }}{% endif %}</p>
+      <p class="price" style="margin:16px 0">{{ product.price_minor|money }}</p>
+      <p style="white-space:pre-line">{{ product.description }}</p>
+      <div class="notice mt" style="display:flex;gap:10px;align-items:center"><span class="pulse"></span><span>A small donation is set aside from every order.</span></div>
+      <div class="mt">
+      {% if product.in_stock %}
+        <form method="post" action="{% url 'cart:add' product.pk %}" class="row">{% csrf_token %}
+          <input type="hidden" name="next" value="{% url 'cart:detail' %}">
+          <label class="sr" for="qty">Quantity</label>
+          <select class="input qty" id="qty" name="qty">{% for n in "123456789" %}{% if forloop.counter <= qty_max %}<option value="{{ n }}">{{ n }}</option>{% endif %}{% endfor %}</select>
+          <button class="btn btn-p" type="submit">Add to cart</button>
+        </form>
+        <p class="small muted mt">{{ product.stock }} in stock</p>
+      {% else %}<span class="badge badge-no">Sold out</span>{% endif %}
+      </div>
+    </div>
+  </div>
+  {% if related %}<h2 class="mt2" style="font-size:1.6rem;margin-bottom:18px">More like this</h2><div class="pgrid">{% for product in related %}{% include "catalog/_card.html" %}{% endfor %}</div>{% endif %}
+</div></section>
+{% endblock %}

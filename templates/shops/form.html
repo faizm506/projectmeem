@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ title }} | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow">
+  <h1 style="margin-bottom:10px">{{ title }}<span class="stop">.</span></h1>
+  {% if intro %}<p class="sub" style="margin-bottom:22px">{{ intro }}</p>{% endif %}
+  <form method="post" enctype="multipart/form-data" class="form-card mt">{% csrf_token %}
+    {% include "_fields.html" %}
+    <div class="row"><button class="btn btn-p" type="submit">Save</button><a class="btn btn-o" href="{% url 'shops:dashboard' %}">Cancel</a></div>
+    <p class="small muted mt">By continuing you agree to the <a class="linkbtn" href="{% url 'core:seller_agreement' %}">Seller Agreement</a>.</p>
+  </form>
+</div></section>
+{% endblock %}

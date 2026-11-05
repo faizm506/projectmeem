@@ -1,0 +1,223 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}MEEM | One trusted space for Muslim-owned brands{% endblock %}
+{% block nav_class %}{% endblock %}
+{% block loader %}
+<!-- ============ LOADER ============ -->
+<div class="loader" aria-hidden="true">
+  <svg viewBox="165 145 375 500">
+    <path class="lp" pathLength="1" d="M255 316C290 220 350 148 430 147C480 147 515 215 515 280C515 340 485 392 420 394C350 396 290 392 255 420C240 435 238 460 238 485C238 540 225 600 172 642C190 590 190 520 190 470C190 390 230 330 310 314C360 306 410 312 445 317C440 270 405 228 358 228C310 228 280 262 268 300Z"/>
+    <circle cx="499" cy="449" r="38"/>
+  </svg>
+</div>
+{% endblock %}
+{% block content %}
+{% include "core/_hero.html" %}
+
+<div class="divider" style="--from:var(--cream);--to:var(--green)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70C260 10 520 120 780 60S1250 10 1440 70V120H0z"/></svg></div>
+
+{% if categories|length >= 3 %}
+<!-- ============ CATEGORIES (3D arcade, from the database) ============ -->
+<section class="arcade" id="categories" aria-label="Browse MEEM categories">
+  <div class="wrap head center" data-reveal>
+    <span class="eyebrow light">Categories</span>
+    <h2 style="margin-top:18px">Step into the arcade<span class="stop">.</span></h2>
+    <p class="sub">Every window is a corner of MEEM. Spin it, swipe it, find something you love.</p>
+  </div>
+  <div class="rig" id="rig" tabindex="0" role="group" aria-roledescription="carousel" aria-label="Product categories. Use left and right arrow keys.">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="cyl" id="cyl">
+      {% for c in categories %}<article class="win tone-{% cycle 'w' 's' 'o' %}" data-url="{% url 'catalog:list' %}?category={{ c.slug }}"><span class="key"></span><div class="ill"><svg class="ic"><use href="#i-{{ c.icon }}"/></svg></div><h3>{{ c.name }}</h3><p>{{ c.blurb }}</p><span class="veil"></span></article>{% endfor %}
+    </div>
+  </div>
+  <div class="rig-ui">
+    <button class="rbtn prev" id="aPrev" type="button" aria-label="Previous category"><svg class="ic"><use href="#i-arrow"/></svg></button>
+    <div class="cap" id="cap"><b id="capName">{{ categories.0.name }}</b><span id="capText">{{ categories.0.blurb }}</span></div>
+    <button class="rbtn next" id="aNext" type="button" aria-label="Next category"><svg class="ic"><use href="#i-arrow"/></svg></button>
+  </div>
+  <div class="center cap-link" style="position:relative;z-index:1"><a id="capLink" class="btn btn-g btn-sm" href="{% url 'catalog:list' %}">Browse this category</a></div>
+  <div class="adots" id="adots"></div>
+  <p class="hint"><svg class="ic"><use href="#i-arrows"/></svg>Drag, swipe or use the arrows</p>
+</section>
+<div class="divider" style="--from:var(--green);--to:var(--cream)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 50C280 120 560 0 840 60S1280 90 1440 40V120H0z"/></svg></div>
+{% endif %}
+
+{% if products %}
+<!-- ============ NEW ON MEEM ============ -->
+<section class="section" id="shop" style="padding-top:clamp(40px,6vw,72px)"><div class="wrap">
+  <div class="row between head"><div><span class="eyebrow">Fresh in</span><h2 style="margin-top:14px">New on MEEM<span class="stop">.</span></h2></div><a class="btn btn-o btn-sm" href="{% url 'catalog:list' %}">See all products</a></div>
+  <div class="pgrid">{% for product in products %}{% include "catalog/_card.html" %}{% endfor %}</div>
+</div></section>
+{% endif %}
+
+<!-- ============ WHAT IS MEEM ============ -->
+<section class="what" id="about">
+  <div class="wrap">
+    <div data-reveal>
+      <span class="eyebrow">What is MEEM</span>
+      <h2 style="margin-top:18px">A marketplace with a heart<span class="stop">.</span></h2>
+      <p class="sub">MEEM brings Muslim-friendly brands together so you can shop with confidence. And every time you do, someone in need is helped.</p>
+    </div>
+    <div data-stagger>
+      <article class="idea"><div class="ico"><svg class="ic"><use href="#i-shield"/></svg></div><div><h3>Trusted brands</h3><p>Every shop is faith-aligned and checked, so you know what you are buying and who made it.</p></div></article>
+      <article class="idea"><div class="ico"><svg class="ic"><use href="#i-people"/></svg></div><div><h3>Muslim entrepreneurs</h3><p>Each product comes from a Muslim founder. Your purchase supports their work directly.</p></div></article>
+      <article class="idea"><div class="ico"><svg class="ic"><use href="#i-heart"/></svg></div><div><h3>Shopping with purpose</h3><p>A small part of every order goes to Muslims in need around the world. You do nothing extra.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ HOW IT WORKS ============ -->
+<section class="how" id="how">
+  <div class="wrap">
+    <div class="head" data-reveal>
+      <span class="eyebrow">How it works</span>
+      <h2 style="margin-top:18px">Four simple steps<span class="stop">.</span></h2>
+      <p class="sub">From a seller's first listing to a donation reaching someone in need.</p>
+    </div>
+    <div class="steps">
+      <svg class="wave" viewBox="0 0 1000 1000" preserveAspectRatio="none" aria-hidden="true">
+        <path class="base" d="M500 0C440 120 440 200 500 270S560 420 500 540S440 700 500 800S540 940 500 1000"/>
+        <path class="prog" pathLength="1" d="M500 0C440 120 440 200 500 270S560 420 500 540S440 700 500 800S540 940 500 1000"/>
+      </svg>
+      <article class="step" data-reveal><span class="dot"></span><div class="card"><span class="num">01</span><h3>Sellers join</h3><p>Muslim entrepreneurs open a shop on MEEM and list their products. Setup is simple.</p></div></article>
+      <article class="step" data-reveal><span class="dot"></span><div class="card"><span class="num">02</span><h3>Buyers shop</h3><p>Shoppers browse the app or website and buy from brands they can trust.</p></div></article>
+      <article class="step" data-reveal><span class="dot"></span><div class="card"><span class="num">03</span><h3>A donation is set aside</h3><p>With every order, MEEM automatically sets aside a small donation. No extra clicks.</p></div></article>
+      <article class="step" data-reveal><span class="dot"></span><div class="card"><span class="num">04</span><h3>Everything is tracked</h3><p>MEEM runs the platform, supports sellers and records every donation openly.</p></div></article>
+    </div>
+  </div>
+</section>
+
+
+<div class="divider" style="--from:var(--cream);--to:var(--green-d)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70C260 10 520 120 780 60S1250 10 1440 70V120H0z"/></svg></div>
+
+<!-- ============ IMPACT (live numbers) ============ -->
+<section class="impact" id="impact">
+  <div class="wrap">
+    <div class="head" data-reveal>
+      <span class="eyebrow light">Our impact</span>
+      <h2 style="margin-top:18px">Shopping that gives back<span class="stop">.</span></h2>
+      <p class="sub">{{ site_setting.donation_bps|percent_bps }} of every order's items total is set aside for Muslims in need. Each amount goes into a permanent ledger and is shown openly.</p>
+    </div>
+    <div class="impact-grid">
+      <figure class="flow" data-reveal>
+<svg viewBox="0 0 640 300" role="img" aria-label="A purchase splits between the seller, MEEM and charity">
+          <defs><path id="p1" d="M116 150C260 150 300 52 470 52"/><path id="p2" d="M116 150L470 150"/><path id="p3" d="M116 150C260 150 300 248 470 248"/></defs>
+          <g fill="none" stroke="#FDF4E8" stroke-opacity=".35" stroke-width="2" stroke-dasharray="4 8"><use href="#p1"/><use href="#p2"/><use href="#p3"/></g>
+          <circle cx="70" cy="150" r="46" fill="#FDF4E8"/>
+          <text x="70" y="146" text-anchor="middle" font-size="14" font-weight="700" fill="#173F32" font-family="Plus Jakarta Sans, sans-serif">Your</text>
+          <text x="70" y="164" text-anchor="middle" font-size="14" font-weight="700" fill="#173F32" font-family="Plus Jakarta Sans, sans-serif">order</text>
+          <g font-family="Plus Jakarta Sans, sans-serif">
+            <rect x="470" y="20" width="160" height="64" rx="18" fill="#245A48" stroke="#FDF4E8" stroke-opacity=".3"/><text x="550" y="48" text-anchor="middle" font-size="17" font-weight="700" fill="#FDF4E8">Seller</text><text x="550" y="68" text-anchor="middle" font-size="12" fill="#FDF4E8" fill-opacity=".8">Earns from the sale</text>
+            <rect x="470" y="118" width="160" height="64" rx="18" fill="#245A48" stroke="#FDF4E8" stroke-opacity=".3"/><text x="550" y="146" text-anchor="middle" font-size="17" font-weight="700" fill="#FDF4E8">MEEM</text><text x="550" y="166" text-anchor="middle" font-size="12" fill="#FDF4E8" fill-opacity=".8">Runs the platform</text>
+            <rect x="470" y="216" width="160" height="64" rx="18" fill="#C99A3B"/><text x="550" y="244" text-anchor="middle" font-size="17" font-weight="700" fill="#1C2B25">Charity</text><text x="550" y="264" text-anchor="middle" font-size="12" fill="#1C2B25">A small share, set aside</text>
+          </g>
+          <circle r="6" fill="#C99A3B"><animateMotion dur="3.2s" repeatCount="indefinite"><mpath href="#p1"/></animateMotion></circle>
+          <circle r="6" fill="#C99A3B"><animateMotion dur="3.2s" begin="1s" repeatCount="indefinite"><mpath href="#p2"/></animateMotion></circle>
+          <circle r="8" fill="#C99A3B"><animateMotion dur="3.2s" begin="2s" repeatCount="indefinite"><mpath href="#p3"/></animateMotion></circle>
+        </svg>
+      </figure>
+      <div class="counters" data-stagger>
+        <div class="counter"><div class="num-row"><span class="pulse"></span><b data-count="{{ impact.orders }}">{{ impact.orders }}</b></div><span>Paid orders</span></div>
+        <div class="counter"><div class="num-row"><span class="pulse"></span><b data-count="{% widthratio impact.net 100 1 %}" data-prefix="&#8377;">0</b></div><span>Set aside so far</span></div>
+        <div class="counter"><div class="num-row"><span class="pulse"></span><b data-count="{% widthratio impact.sent 100 1 %}" data-prefix="&#8377;">0</b></div><span>Sent to charity partners</span></div>
+        <p class="fine"><a class="linkbtn" style="color:var(--gold-l)" href="{% url 'donations:impact' %}">See every donation</a></p>
+      </div>
+    </div>
+    <ul class="causes" data-stagger aria-label="Causes we support">{% for c in causes %}<li><svg class="ic"><use href="#i-heart"/></svg>{{ c.name }}</li>{% endfor %}</ul>
+    <div class="calc" data-reveal>
+      <div>
+        <h3>See it for yourself</h3>
+        <p class="calc-line">If you shop for <b>&#8377;<span id="amt">1000</span></b>, MEEM sets aside <b class="gold-t">&#8377;<span id="don">20.00</span></b>.</p>
+        <label class="sr" for="amount">Order amount in rupees</label>
+        <input type="range" id="amount" min="100" max="5000" step="100" value="1000" data-bps="{{ site_setting.donation_bps }}">
+        <p class="fine">This is the live rate (<span id="rate">{{ site_setting.donation_bps|percent_bps }}</span>) and it comes out of MEEM's commission, so it never raises your price.</p>
+      </div>
+      <svg class="jar" viewBox="0 0 120 160" aria-hidden="true">
+        <defs><clipPath id="jc"><path d="M30 28h60v14c10 6 14 14 14 26v62a14 14 0 0 1-14 14H30a14 14 0 0 1-14-14V68c0-12 4-20 14-26z"/></clipPath></defs>
+        <g clip-path="url(#jc)"><rect x="0" y="0" width="120" height="160" fill="#FDF4E8" fill-opacity=".08"/><rect id="jarFill" x="0" y="20" width="120" height="140" fill="#C99A3B"/></g>
+        <path d="M30 28h60v14c10 6 14 14 14 26v62a14 14 0 0 1-14 14H30a14 14 0 0 1-14-14V68c0-12 4-20 14-26z" fill="none" stroke="#FDF4E8" stroke-width="3"/><rect x="26" y="14" width="68" height="14" rx="7" fill="#FDF4E8"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="--from:var(--green-d);--to:var(--cream)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 50C280 120 560 0 840 60S1280 90 1440 40V120H0z"/></svg></div>
+
+<!-- ============ FOR SELLERS ============ -->
+<section class="sellers" id="sellers">
+  <div class="wrap">
+    <div class="sell-copy">
+      <div data-reveal><span class="eyebrow">For sellers</span><h2 style="margin-top:18px">Open your shop on MEEM<span class="stop">.</span></h2><p class="sub">You make something good. We help the right people find it.</p></div>
+      <ul class="benefits" data-stagger>
+        <li><svg class="ic"><use href="#i-store"/></svg><div><h3>Open your shop</h3><p>Set up in minutes and list your products.</p></div></li>
+        <li><svg class="ic"><use href="#i-pulse"/></svg><div><h3>Reach faithful buyers</h3><p>Customers who are already looking for brands like yours.</p></div></li>
+        <li><svg class="ic"><use href="#i-people"/></svg><div><h3>Community support</h3><p>A team and a network of sellers that help each other.</p></div></li>
+        <li><svg class="ic"><use href="#i-tools"/></svg><div><h3>Simple tools</h3><p>Manage orders and products without the headache.</p></div></li>
+      </ul>
+      <a href="{% url 'shops:create' %}" class="btn btn-p" data-reveal>Open your shop <svg class="ic"><use href="#i-arrow"/></svg></a>
+    </div>
+    <div class="sell-art" data-reveal aria-hidden="true">
+      <div class="sell-blob"></div>
+      <svg viewBox="0 0 360 300">
+        <circle cx="180" cy="34" r="26" fill="#C99A3B"/><use href="#logo" x="168" y="14" width="24" height="32" style="color:#173F32"/>
+        <rect x="40" y="110" width="280" height="172" rx="10" fill="#FFF9F0" stroke="#245A48" stroke-opacity=".2"/>
+        <g><rect x="30" y="62" width="50" height="50" fill="#245A48"/><rect x="80" y="62" width="50" height="50" fill="#EAD7B7"/><rect x="130" y="62" width="50" height="50" fill="#245A48"/><rect x="180" y="62" width="50" height="50" fill="#EAD7B7"/><rect x="230" y="62" width="50" height="50" fill="#245A48"/><rect x="280" y="62" width="50" height="50" fill="#EAD7B7"/>
+          <circle cx="55" cy="112" r="25" fill="#245A48"/><circle cx="105" cy="112" r="25" fill="#EAD7B7"/><circle cx="155" cy="112" r="25" fill="#245A48"/><circle cx="205" cy="112" r="25" fill="#EAD7B7"/><circle cx="255" cy="112" r="25" fill="#245A48"/><circle cx="305" cy="112" r="25" fill="#EAD7B7"/></g>
+        <path d="M150 282v-62a30 30 0 0 1 60 0v62z" fill="#245A48"/><circle cx="198" cy="250" r="4" fill="#C99A3B"/>
+        <rect x="58" y="170" width="70" height="8" rx="4" fill="#C99A3B"/><rect x="62" y="150" width="14" height="20" rx="3" fill="#245A48"/><rect x="84" y="156" width="14" height="14" rx="3" fill="#173F32"/><rect x="106" y="146" width="14" height="24" rx="3" fill="#245A48"/>
+        <rect x="232" y="170" width="70" height="8" rx="4" fill="#C99A3B"/><rect x="238" y="148" width="18" height="22" rx="3" fill="#173F32"/><rect x="264" y="154" width="14" height="16" rx="3" fill="#245A48"/><rect x="284" y="144" width="12" height="26" rx="3" fill="#245A48"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<div class="divider" style="--from:var(--cream);--to:var(--cream-2)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 60C240 0 480 120 720 60S1200 0 1440 60V120H0z"/></svg></div>
+<!-- ============ TRUST & COMMUNITY ============ -->
+<div class="divider" style="--from:var(--cream);--to:var(--cream-2)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 60C240 0 480 120 720 60S1200 0 1440 60V120H0z"/></svg></div>
+<section class="trust-sec">
+  <div class="wrap">
+    <div class="head" data-reveal><span class="eyebrow">Trust &amp; community</span><h2 style="margin-top:18px">What we stand for<span class="stop">.</span></h2></div>
+    <div class="bento" data-stagger>
+      <article class="bcard b1 tone-g"><svg class="ic bigic"><use href="#i-leaf"/></svg><div><h3>Halal-aligned</h3><p>Products and brands that fit Muslim values, from the ingredients to the way they are made and sold.</p></div></article>
+      <article class="bcard b2 tone-o"><svg class="ic bigic"><use href="#i-eye"/></svg><div><h3>Transparent</h3><p>We track every donation and share where it goes. No guessing.</p></div></article>
+      <article class="bcard b3 tone-w" style="box-shadow:inset 0 0 0 1.5px rgba(36,90,72,.2)"><svg class="ic bigic"><use href="#i-people"/></svg><div><h3>Community-first</h3><p>Built with sellers and buyers, not just for them.</p></div></article>
+      <article class="bcard b4 tone-d"><svg class="ic bigic"><use href="#i-shield"/></svg><div><h3>Quality-checked</h3><p>Shops are reviewed so you can buy with ease.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<div class="divider" style="--from:var(--cream-2);--to:var(--cream)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 40C300 120 600 0 900 60S1300 100 1440 40V120H0z"/></svg></div>
+
+<!-- ============ FAQ ============ -->
+<section class="faq" id="faq">
+  <div class="wrap narrow">
+    <div class="head" data-reveal><span class="eyebrow">FAQ</span><h2 style="margin-top:18px">Good questions<span class="stop">.</span></h2></div>
+    <div data-stagger>
+      <div class="faq-item"><button class="q" aria-expanded="false" aria-controls="a1" id="q1">How do donations work?<svg class="ic"><use href="#i-plus"/></svg></button><div class="a" id="a1" role="region" aria-labelledby="q1"><div><p>With every order, MEEM automatically sets aside a small share for charity. You do not need to do anything extra. We record each donation and share updates openly.</p></div></div></div>
+      <div class="faq-item"><button class="q" aria-expanded="false" aria-controls="a2" id="q2">How do I become a seller?<svg class="ic"><use href="#i-plus"/></svg></button><div class="a" id="a2" role="region" aria-labelledby="q2"><div><p>Create an account, choose "Sell on MEEM" and tell us about your brand. We review every shop by hand and email you when it is approved.</p></div></div></div>
+      <div class="faq-item"><button class="q" aria-expanded="false" aria-controls="a3" id="q3">Which causes does MEEM support?<svg class="ic"><use href="#i-plus"/></svg></button><div class="a" id="a3" role="region" aria-labelledby="q3"><div><p>We support Muslims in need in Gaza, Yemen and Sudan, and wherever help is needed most.</p></div></div></div>
+      <div class="faq-item"><button class="q" aria-expanded="false" aria-controls="a4" id="q4">When is MEEM launching?<svg class="ic"><use href="#i-plus"/></svg></button><div class="a" id="a4" role="region" aria-labelledby="q4"><div><p>MEEM Version 1 is open for testing with a small group of sellers. Join the list below to hear when we open wider.</p></div></div></div>
+    </div>
+  </div>
+</section>
+
+
+
+<div class="divider" style="--from:var(--cream);--to:var(--green)"><svg viewBox="0 0 1440 120" preserveAspectRatio="none"><path d="M0 70C260 10 520 120 780 60S1250 10 1440 70V120H0z"/></svg></div>
+
+<!-- ============ WAITLIST ============ -->
+<section class="cta" id="join">
+  <div class="wrap narrow">
+    <svg class="cta-logo" aria-hidden="true"><use href="#logo"/></svg>
+    <h2 data-reveal>Stay in the loop<span class="stop">.</span></h2>
+    <p class="sub" data-reveal>Get news when new sellers and features arrive.</p>
+    <form class="form" id="waitlist" method="post" action="{% url 'core:waitlist' %}" data-reveal>{% csrf_token %}
+      <label class="sr" for="email">Email address</label>
+      <input type="email" id="email" name="email" placeholder="you@example.com" autocomplete="email" required maxlength="254">
+      <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <button class="btn btn-g" type="submit">Join the list</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

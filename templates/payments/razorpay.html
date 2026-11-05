@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Pay | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow">
+  {% include "_stepper.html" with step=3 %}
+  <span class="eyebrow">Secure payment</span><h1 style="margin:14px 0 14px">Pay {{ order.total_minor|money }}<span class="stop">.</span></h1>
+  <p class="sub" style="margin-bottom:20px">A secure Razorpay window opens. We never see or store your card details.</p>
+  <button class="btn btn-p" id="payBtn" type="button"
+    data-key="{{ key_id }}" data-amount="{{ order.total_minor }}" data-order="{{ order.provider_order_id }}" data-desc="Order {{ order.number }}"
+    data-name="{{ order.ship_name }}" data-email="{{ order.user.email }}" data-phone="{{ order.ship_phone }}">Pay now</button>
+  <form id="verifyForm" method="post" action="{% url 'payments:razorpay_verify' %}" hidden>{% csrf_token %}
+    <input name="razorpay_order_id"><input name="razorpay_payment_id"><input name="razorpay_signature">
+  </form>
+</div></section>
+{% endblock %}
+{% block scripts %}
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="{% static 'js/razorpay.js' %}"></script>
+{% endblock %}

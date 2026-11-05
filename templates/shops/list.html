@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+{% block title %}Our sellers | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <span class="eyebrow">Our sellers</span><h1 style="margin:14px 0 8px">Muslim-owned, hand-approved<span class="stop">.</span></h1>
+  <p class="sub" style="margin-bottom:28px">Every shop is reviewed by our team before it goes live.</p>
+  <div class="grid g3">{% for shop in shops %}
+    <a class="card" href="{{ shop.get_absolute_url }}"><h3>{{ shop.name }}</h3><p class="small muted">{{ shop.city }}</p><p style="margin-top:8px">{{ shop.tagline }}</p></a>
+  {% empty %}<div class="notice">No shops yet. <a class="linkbtn" href="{% url 'shops:create' %}">Be the first to open one</a>.</div>{% endfor %}</div>
+</div></section>
+{% endblock %}

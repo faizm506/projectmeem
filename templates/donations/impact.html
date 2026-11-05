@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Our impact | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <span class="eyebrow">Transparency</span>
+  <h1 style="margin:14px 0 12px">Where every donation goes<span class="stop">.</span></h1>
+  <p class="sub">With every order, MEEM sets aside {{ site_setting.donation_bps|percent_bps }} of the items total for Muslims in need. Every amount is recorded in a permanent ledger that cannot be edited. When money is sent to a charity, we publish the receipt here.</p>
+  <div class="stats mt2">
+    <div class="stat"><b>{{ impact.net|money }}</b><span>Set aside so far</span></div>
+    <div class="stat"><b>{{ impact.sent|money }}</b><span>Sent to charity partners</span></div>
+    <div class="stat"><b>{{ impact.waiting|money }}</b><span>Waiting to be sent</span></div>
+    <div class="stat"><b>{{ impact.orders }}</b><span>Paid orders</span></div>
+  </div>
+</div></section>
+<section class="section" style="padding-top:20px"><div class="wrap">
+  <h2 style="font-size:1.7rem;margin-bottom:18px">By cause</h2>
+  <div class="grid g3">{% for row in impact.causes %}
+    <div class="card"><h3>{{ row.cause.name }}</h3><p class="small muted" style="margin:6px 0 14px">{{ row.cause.description }}</p>
+      <div class="kv"><span>Set aside</span><strong>{{ row.net|money }}</strong><span>Sent</span><strong>{{ row.sent|money }}</strong><span>Waiting</span><strong>{{ row.waiting|money }}</strong></div></div>
+  {% empty %}<div class="notice">No causes yet.</div>{% endfor %}</div>
+
+  <h2 style="font-size:1.7rem;margin:44px 0 18px">Money sent to charities</h2>
+  {% if disbursements %}<div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Cause</th><th>Charity</th><th>Amount</th><th>Reference</th><th>Proof</th></tr></thead><tbody>
+    {% for d in disbursements %}<tr><td>{{ d.paid_on|date:"d M Y" }}</td><td>{{ d.cause.name }}</td><td>{{ d.charity_name }}</td><td>{{ d.amount_minor|money }}</td><td>{{ d.reference }}</td><td>{% if d.proof %}<a class="linkbtn" href="{{ d.proof.url }}" target="_blank" rel="noopener">View receipt</a>{% else %}-{% endif %}</td></tr>{% endfor %}
+  </tbody></table></div>{% else %}<div class="notice">The first transfer to our charity partners will appear here, with its receipt.</div>{% endif %}
+
+  <h2 style="font-size:1.7rem;margin:44px 0 18px">By month</h2>
+  {% if months %}<div class="table-wrap"><table class="table"><thead><tr><th>Month</th><th class="right">Set aside (net of refunds)</th></tr></thead><tbody>
+    {% for m in months %}<tr><td>{{ m.month|date:"F Y" }}</td><td class="right">{{ m.total|money }}</td></tr>{% endfor %}</tbody></table></div>{% else %}<div class="notice">Totals will appear after the first orders.</div>{% endif %}
+</div></section>
+{% endblock %}

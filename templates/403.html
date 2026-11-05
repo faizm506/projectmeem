@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Not allowed | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow center">
+  <span class="eyebrow">403</span>
+  <h1 style="margin:14px 0">You cannot open that page<span class="stop">.</span></h1>
+  <p class="sub" style="margin-inline:auto">If you think this is a mistake, please log in with the right account.</p>
+  <a class="btn btn-p mt2" href="{% url 'accounts:login' %}">Log in</a>
+</div></section>
+{% endblock %}

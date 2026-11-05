@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Shop | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <span class="eyebrow">Browse</span><h1 style="margin:14px 0 20px">Shop MEEM<span class="stop">.</span></h1>
+  <form method="get" class="searchbar" role="search">
+    <label class="sr" for="q">Search products</label>
+    <input class="input" id="q" type="search" name="q" value="{{ q }}" placeholder="Search products, shops...">
+    {% if active_category %}<input type="hidden" name="category" value="{{ active_category }}">{% endif %}
+    <select class="input" name="sort" aria-label="Sort" style="max-width:200px">
+      <option value="new" {% if sort == 'new' %}selected{% endif %}>Newest</option>
+      <option value="price_asc" {% if sort == 'price_asc' %}selected{% endif %}>Price: low to high</option>
+      <option value="price_desc" {% if sort == 'price_desc' %}selected{% endif %}>Price: high to low</option>
+    </select>
+    <button class="btn btn-p" type="submit">Search</button>
+  </form>
+  <div class="filters"><a href="{% url 'catalog:list' %}" class="{% if not active_category %}on{% endif %}">All</a>
+    {% for c in categories %}<a href="?category={{ c.slug }}" class="{% if active_category == c.slug %}on{% endif %}">{{ c.name }}</a>{% endfor %}</div>
+  {% if page.object_list %}
+    <div class="pgrid">{% for product in page.object_list %}{% include "catalog/_card.html" %}{% endfor %}</div>
+    {% if page.has_other_pages %}<div class="pager">
+      {% if page.has_previous %}<a class="btn btn-o btn-sm" href="?{{ base_qs }}&page={{ page.previous_page_number }}">Previous</a>{% endif %}
+      <span class="muted" style="align-self:center">Page {{ page.number }} of {{ page.paginator.num_pages }}</span>
+      {% if page.has_next %}<a class="btn btn-o btn-sm" href="?{{ base_qs }}&page={{ page.next_page_number }}">Next</a>{% endif %}
+    </div>{% endif %}
+  {% else %}<div class="notice">Nothing found. Try a different search.</div>{% endif %}
+</div></section>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Your cart | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  {% include "_stepper.html" with step=1 %}
+  <h1 style="margin-bottom:22px">Your cart<span class="stop">.</span></h1>
+  {% if lines %}
+  <div class="layout2">
+    <div class="card">
+      {% for line in lines %}
+      <div class="cartline">
+        <div>{% with product=line.product %}{% include "catalog/_art.html" %}{% endwith %}</div>
+        <div><a href="{{ line.product.get_absolute_url }}"><strong>{{ line.product.title }}</strong></a><br><span class="small muted">{{ line.product.shop.name }} &middot; {{ line.product.price_minor|money }}</span>
+          <form method="post" action="{% url 'cart:update' line.product.pk %}" class="row" style="margin-top:8px">{% csrf_token %}
+            <label class="sr" for="q{{ line.product.pk }}">Quantity</label><input class="input qty" id="q{{ line.product.pk }}" type="number" name="qty" min="1" max="{{ line.product.stock }}" value="{{ line.qty }}">
+            <button class="btn btn-o btn-sm" type="submit">Update</button></form>
+        </div>
+        <div class="right"><strong>{{ line.line_total|money }}</strong>
+          <form method="post" action="{% url 'cart:remove' line.product.pk %}">{% csrf_token %}<button class="linkbtn small" type="submit">Remove</button></form></div>
+      </div>{% endfor %}
+    </div>
+    <div class="card">
+      <h3 style="margin-bottom:14px">Summary</h3>
+      <div class="kv"><span>Items</span><span>{{ subtotal|money }}</span><span>Shipping</span><span>{% if shipping %}{{ shipping|money }}{% else %}Free{% endif %}</span>
+        <span class="total">Total</span><span class="total">{{ total|money }}</span></div>
+      <p class="small muted mt">Free shipping on orders of {{ free_over|money }} or more.</p>
+      <div class="notice mt" style="display:flex;gap:10px;align-items:center"><span class="pulse"></span><span>{{ donation|money }} will be set aside for Muslims in need.</span></div>
+      <a class="btn btn-p mt" style="width:100%" href="{% url 'orders:checkout' %}">Checkout</a>
+    </div>
+  </div>
+  {% else %}<div class="notice">Your cart is empty. <a class="linkbtn" href="{% url 'catalog:list' %}">Find something you love</a>.</div>{% endif %}
+</div></section>
+{% endblock %}

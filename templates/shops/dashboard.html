@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Seller dashboard | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <span class="eyebrow">Seller dashboard</span>
+  <div class="row between" style="margin:12px 0 18px"><h1>{{ shop.name }}<span class="stop">.</span></h1>
+    <div class="row"><a class="btn btn-o btn-sm" href="{% url 'shops:edit' %}">Edit shop</a>{% if shop.is_approved %}<a class="btn btn-o btn-sm" href="{{ shop.get_absolute_url }}">View public page</a>{% endif %}</div></div>
+  {% if shop.status == 'pending' %}<div class="notice">Your shop is waiting for approval. We review every shop by hand and will email you soon.</div>
+  {% elif shop.status == 'suspended' %}<div class="notice">Your shop is suspended. Please contact {{ site_setting.contact_email }}.</div>{% endif %}
+  <div class="stats mt">
+    <div class="stat"><b>{{ balance.available|money }}</b><span>Available for payout</span></div>
+    <div class="stat"><b>{{ balance.pending|money }}</b><span>Pending (not yet delivered)</span></div>
+    <div class="stat"><b>{{ balance.paid_out|money }}</b><span>Paid out so far</span></div>
+    <div class="stat"><b>{{ order_count }}</b><span>Paid orders</span></div>
+  </div>
+
+  <div class="row between mt2"><h2 style="font-size:1.6rem">Products</h2>{% if shop.is_approved %}<a class="btn btn-p btn-sm" href="{% url 'shops:product_new' %}">Add product</a>{% endif %}</div>
+  <div class="table-wrap mt"><table class="table"><thead><tr><th>Product</th><th>Category</th><th>Price</th><th>Stock</th><th>Status</th><th></th></tr></thead><tbody>
+    {% for p in products %}<tr><td>{{ p.title }}</td><td>{{ p.category.name }}</td><td>{{ p.price_minor|money }}</td><td>{{ p.stock }}</td><td><span class="badge {% if p.is_active %}badge-ok{% endif %}">{% if p.is_active %}Live{% else %}Hidden{% endif %}</span></td><td class="right"><a class="linkbtn" href="{% url 'shops:product_edit' p.pk %}">Edit</a></td></tr>
+    {% empty %}<tr><td colspan="6" class="muted">No products yet.</td></tr>{% endfor %}</tbody></table></div>
+
+  <div class="row between mt2"><h2 style="font-size:1.6rem">Recent orders</h2><a class="linkbtn" href="{% url 'shops:orders' %}">All orders and shipping</a></div>
+  <div class="table-wrap mt"><table class="table"><thead><tr><th>Order</th><th>Item</th><th>Earning</th><th>Status</th></tr></thead><tbody>
+    {% for i in recent_items %}<tr><td>{{ i.order.number }}</td><td>{{ i.title }} x {{ i.quantity }}</td><td>{{ i.seller_earning_minor|money }}</td><td>{{ i.get_fulfil_status_display }}</td></tr>
+    {% empty %}<tr><td colspan="4" class="muted">No paid orders yet.</td></tr>{% endfor %}</tbody></table></div>
+
+  <h2 style="font-size:1.6rem;margin:36px 0 12px">Payouts</h2>
+  <div class="table-wrap"><table class="table"><thead><tr><th>Date</th><th>Amount</th><th>Reference</th></tr></thead><tbody>
+    {% for p in payouts %}<tr><td>{{ p.created_at|date:"d M Y" }}</td><td>{{ p.amount_minor|money }}</td><td>{{ p.reference }}</td></tr>{% empty %}<tr><td colspan="3" class="muted">No payouts yet. MEEM pays out delivered orders manually in Version 1.</td></tr>{% endfor %}</tbody></table></div>
+</div></section>
+{% endblock %}

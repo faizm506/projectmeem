@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}Test payment | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow">
+  {% include "_stepper.html" with step=3 %}
+  <span class="eyebrow">Test mode</span><h1 style="margin:14px 0 14px">Pay {{ order.total_minor|money }}<span class="stop">.</span></h1>
+  <div class="notice" style="margin-bottom:20px">This is a fake payment page for development. No money moves. Set PAYMENT_PROVIDER=razorpay to take real payments.</div>
+  <form method="post" action="{% url 'payments:mock_confirm' order.number %}" class="form-card">{% csrf_token %}
+    <p style="margin-bottom:16px">Order <strong>{{ order.number }}</strong></p>
+    <button class="btn btn-g" type="submit">Complete test payment</button>
+  </form>
+</div></section>
+{% endblock %}

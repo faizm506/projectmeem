@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Slow down | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow center">
+  <span class="eyebrow">Too many requests</span>
+  <h1 style="margin:14px 0">Please slow down<span class="stop">.</span></h1>
+  <p class="sub" style="margin-inline:auto">You have tried that a few too many times. Wait a little while and try again.</p>
+  <a class="btn btn-p mt2" href="{% url 'core:home' %}">Back to home</a>
+</div></section>
+{% endblock %}

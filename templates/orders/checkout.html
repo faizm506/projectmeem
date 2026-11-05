@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% block title %}Checkout | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  {% include "_stepper.html" with step=2 %}
+  <h1 style="margin-bottom:22px">Checkout<span class="stop">.</span></h1>
+  <div class="layout2">
+    <form method="post" class="form-card">{% csrf_token %}
+      <h3 style="margin-bottom:16px">Where should we send it?</h3>
+      {% if form.non_field_errors %}<div class="errorlist">{{ form.non_field_errors }}</div>{% endif %}
+      <div class="formgrid two">{% for field in form %}<div class="field"><label for="{{ field.id_for_label }}">{{ field.label }}</label>{{ field }}{{ field.errors }}</div>{% endfor %}</div>
+      <button class="btn btn-p" type="submit">Continue to payment</button>
+    </form>
+    <div class="card">
+      <h3 style="margin-bottom:14px">Your order</h3>
+      {% for line in lines %}<div class="kv" style="margin-bottom:8px"><span>{{ line.product.title }} <span class="muted">x {{ line.qty }}</span></span><span>{{ line.line_total|money }}</span></div>{% endfor %}
+      <div class="kv mt"><span>Items</span><span>{{ subtotal|money }}</span><span>Shipping</span><span>{% if shipping %}{{ shipping|money }}{% else %}Free{% endif %}</span><span class="total">Total</span><span class="total">{{ total|money }}</span></div>
+      <div class="notice mt" style="display:flex;gap:10px;align-items:center"><span class="pulse"></span><span>{{ donation|money }} is set aside for Muslims in need.</span></div>
+    </div>
+  </div>
+</div></section>
+{% endblock %}

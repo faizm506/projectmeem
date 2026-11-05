@@ -1,0 +1,110 @@
+<!-- ============ HERO ============ -->
+<section class="hero2">
+  <svg class="meem-bg" aria-hidden="true" focusable="false"><use href="#logo"/></svg>
+  <div class="wrap hero2-grid">
+    <div class="hero2-copy">
+      <span class="eyebrow tag" data-reveal><svg class="mini" aria-hidden="true"><use href="#logo"/></svg>MEEM</span>
+      <h1 data-reveal style="--d:.1s">Every order <span class="mark">gives back<svg viewBox="0 0 300 20" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 13C60 4 150 4 296 10"/></svg></span><span class="stop">.</span></h1>
+      <p class="lead" data-reveal style="--d:.2s">Muslim-owned brands, one trusted space. A share of every purchase reaches a family in need.</p>
+      <div class="cta-row" data-reveal style="--d:.3s">
+        <a href="{% url 'catalog:list' %}" class="btn btn-p">Start shopping <svg class="ic"><use href="#i-arrow"/></svg></a>
+        <a href="{% url 'shops:create' %}" class="btn btn-o">Become a seller</a>
+      </div>
+    </div>
+
+    <div class="hero2-art" data-reveal style="--d:.15s">
+      <div class="scene-wrap" id="sceneWrap">
+        <div class="scene-chip"><div class="row"><span class="pulse"></span><span>Set aside</span><b id="sceneTotal">&#8377;0</b></div><small id="sceneFam">0 families fed</small></div>
+        <svg id="shopScene" viewBox="0 0 640 560" role="img" aria-label="Illustration: customers shop at a MEEM store, a share of each order travels to a family in need, and the family celebrates.">
+          <defs>
+            <radialGradient id="glow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#E9C46A"/><stop offset="1" stop-color="#C99A3B" stop-opacity="0"/></radialGradient>
+            <radialGradient id="sky" cx=".5" cy=".4" r=".7"><stop offset="0" stop-color="#FBF0DF"/><stop offset="1" stop-color="#F1DFC2"/></radialGradient>
+            <linearGradient id="fade"><stop offset="0" stop-color="#000"/><stop offset=".07" stop-color="#fff"/><stop offset=".93" stop-color="#fff"/><stop offset="1" stop-color="#000"/></linearGradient>
+            <mask id="groundMask" maskUnits="userSpaceOnUse" x="0" y="480" width="640" height="80"><rect x="0" y="480" width="640" height="80" fill="url(#fade)"/></mask>
+            <clipPath id="skyClip"><circle cx="320" cy="285" r="262"/></clipPath>
+            <path id="heart" d="M0 5C-9 -2 -6 -9 0 -4C6 -9 9 -2 0 5Z"/>
+          </defs>
+
+          <!-- sky: sun travels slowly, light turns golden -->
+          <circle cx="320" cy="285" r="262" fill="url(#sky)"/>
+          <g clip-path="url(#skyClip)"><rect x="0" y="0" width="640" height="560" id="dusk" fill="#E8AE55" opacity="0"/></g>
+          <g id="sun"><circle class="halo" r="48" fill="url(#glow)" opacity=".6"/><circle r="21" fill="#C99A3B"/></g>
+          <g class="cloud c1" fill="#FDF4E8"><ellipse cx="250" cy="66" rx="46" ry="12"/><ellipse cx="278" cy="56" rx="28" ry="12"/></g>
+          <g class="cloud c2" fill="#FDF4E8"><ellipse cx="560" cy="122" rx="34" ry="9"/><ellipse cx="578" cy="114" rx="20" ry="9"/></g>
+          <path class="bird" d="M0 60q6-7 12 0q6-7 12 0"/><path class="bird b2" d="M0 100q5-6 10 0q5-6 10 0"/>
+
+          <!-- the family's home (receives the donations) -->
+          <ellipse cx="515" cy="372" rx="78" ry="9" fill="#173F32" opacity=".1"/>
+          <g class="island">
+            <path d="M425 285C428 332 468 348 515 348C562 348 602 332 605 285Z" fill="#EAD7B7"/>
+            <path d="M440 300C455 330 480 340 515 342" fill="none" stroke="#C99A3B" stroke-opacity=".35" stroke-width="3" stroke-linecap="round"/>
+            <ellipse cx="515" cy="285" rx="90" ry="14" fill="#3F7C66"/>
+            <rect x="441" y="256" width="6" height="30" fill="#7A5640"/><circle cx="444" cy="246" r="16" fill="#3F7C66"/><circle cx="434" cy="253" r="11" fill="#3F7C66"/><circle cx="455" cy="251" r="11" fill="#2E6B57"/>
+            <rect x="466" y="205" width="98" height="82" rx="4" fill="#FFF9F0" stroke="#173F32" stroke-width="3"/>
+            <path d="M458 207C458 160 572 160 572 207Z" fill="#245A48" stroke="#173F32" stroke-width="3"/>
+            <circle cx="515" cy="158" r="6.5" fill="#C99A3B"/>
+            <path d="M500 287V262A15 15 0 0 1 530 262V287Z" fill="#173F32"/>
+            <circle id="doorGlow" cx="515" cy="268" r="28" fill="url(#glow)" opacity=".3"/>
+            <circle cx="486" cy="238" r="7" fill="#F6E9D6" stroke="#173F32" stroke-width="2"/><circle cx="544" cy="238" r="7" fill="#F6E9D6" stroke="#173F32" stroke-width="2"/>
+            <circle id="winGlowL" cx="486" cy="238" r="16" fill="url(#glow)" opacity="0"/><circle id="winGlowR" cx="544" cy="238" r="16" fill="url(#glow)" opacity="0"/>
+            <g id="family"></g>
+            <g id="basket" opacity="0">
+              <path d="M-17 -11H17L13 0H-13Z" fill="#B9834A" stroke="#7A5640" stroke-width="1.5"/><path d="M-14 -6H14M-15 -9H15" stroke="#7A5640" stroke-width="1" opacity=".6"/>
+              <ellipse cx="-7" cy="-14" rx="8" ry="5" fill="#E9C46A" stroke="#B9834A"/><ellipse cx="6" cy="-15" rx="7.5" ry="4.5" fill="#D9A441" stroke="#B9834A"/>
+              <rect x="11" y="-29" width="7" height="17" rx="3" fill="#8BC6D9" stroke="#173F32" stroke-opacity=".35"/><rect x="12.5" y="-32" width="4" height="4" rx="1" fill="#173F32" opacity=".6"/>
+            </g>
+            <g id="bubble" opacity="0"><rect x="-62" y="-17" width="124" height="30" rx="15" fill="#FDF4E8" stroke="#173F32" stroke-width="2"/><path d="M-6 12L0 21L6 12Z" fill="#FDF4E8" stroke="#173F32" stroke-width="2" stroke-linejoin="round"/><rect x="-8" y="9" width="16" height="5" fill="#FDF4E8"/><text id="bubbleText" x="0" y="3" text-anchor="middle" font-family="Plus Jakarta Sans, system-ui, sans-serif" font-size="12.5" font-weight="700" fill="#173F32">JazakAllah khair</text></g>
+          </g>
+
+          <!-- the MEEM shop -->
+          <ellipse cx="235" cy="490" rx="195" ry="9" fill="#173F32" opacity=".14"/>
+          <rect x="80" y="225" width="310" height="263" rx="6" fill="#245A48"/>
+          <rect x="70" y="212" width="330" height="16" rx="5" fill="#173F32"/>
+          <g>
+            <rect x="70" y="228" width="41.25" height="40" fill="#FDF4E8"/><rect x="111.25" y="228" width="41.25" height="40" fill="#E9D3A4"/><rect x="152.5" y="228" width="41.25" height="40" fill="#FDF4E8"/><rect x="193.75" y="228" width="41.25" height="40" fill="#E9D3A4"/>
+            <rect x="235" y="228" width="41.25" height="40" fill="#FDF4E8"/><rect x="276.25" y="228" width="41.25" height="40" fill="#E9D3A4"/><rect x="317.5" y="228" width="41.25" height="40" fill="#FDF4E8"/><rect x="358.75" y="228" width="41.25" height="40" fill="#E9D3A4"/>
+            <circle cx="90.6" cy="268" r="20.6" fill="#FDF4E8"/><circle cx="131.9" cy="268" r="20.6" fill="#E9D3A4"/><circle cx="173.1" cy="268" r="20.6" fill="#FDF4E8"/><circle cx="214.4" cy="268" r="20.6" fill="#E9D3A4"/>
+            <circle cx="255.6" cy="268" r="20.6" fill="#FDF4E8"/><circle cx="296.9" cy="268" r="20.6" fill="#E9D3A4"/><circle cx="338.1" cy="268" r="20.6" fill="#FDF4E8"/><circle cx="379.4" cy="268" r="20.6" fill="#E9D3A4"/>
+          </g>
+          <rect x="172" y="168" width="5" height="46" fill="#173F32"/><rect x="293" y="168" width="5" height="46" fill="#173F32"/>
+          <rect x="150" y="112" width="170" height="68" rx="20" fill="#FDF4E8" stroke="#173F32" stroke-width="4"/>
+          <use href="#logo" x="166" y="122" width="34" height="46" style="color:#245A48"/>
+          <text x="208" y="160" font-family="Fraunces, Georgia, serif" font-size="32" font-weight="600" fill="#173F32" textLength="98" lengthAdjust="spacingAndGlyphs">MEEM</text>
+          <rect x="98" y="292" width="96" height="136" rx="10" fill="#F6E9D6" stroke="#173F32" stroke-width="4"/>
+          <rect x="104" y="352" width="84" height="5" rx="2" fill="#C99A3B"/><rect x="104" y="414" width="84" height="5" rx="2" fill="#C99A3B"/>
+          <g fill="none" stroke="#245A48" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+            <use href="#i-shirt" x="106" y="304" width="40" height="40"/><use href="#i-book" x="148" y="304" width="40" height="40"/>
+            <use href="#i-drop" x="106" y="366" width="40" height="40"/><use href="#i-gift" x="148" y="366" width="40" height="40"/>
+          </g>
+          <!-- right window: the shopkeeper smiles and waves -->
+          <rect x="286" y="292" width="96" height="136" rx="10" fill="#F6E9D6" stroke="#173F32" stroke-width="4"/>
+          <g fill="none" stroke="#245A48" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><use href="#i-home" x="298" y="298" width="34" height="34"/><use href="#i-tech" x="338" y="298" width="34" height="34"/></g>
+          <rect x="292" y="340" width="84" height="4" rx="2" fill="#C99A3B"/>
+          <path d="M306 428C306 398 316 386 334 386C352 386 362 398 362 428Z" fill="#F3E4CB" stroke="#173F32" stroke-opacity=".3"/>
+          <circle cx="334" cy="372" r="10.5" fill="#C68E5E"/>
+          <path d="M323.5 370C323.5 356 344.5 356 344.5 370Z" fill="#FDF4E8" stroke="#173F32" stroke-opacity=".3"/><path d="M323.5 368.5H344.5" stroke="#C99A3B" stroke-width="2"/>
+          <circle cx="330" cy="372" r=".9" fill="#173F32"/><circle cx="338" cy="372" r=".9" fill="#173F32"/><path d="M329.5 377Q334 381 338.5 377" fill="none" stroke="#173F32" stroke-width="1.2" stroke-linecap="round"/>
+          <g id="keeperArm"><path d="M350 394C358 396 363 408 361 424L354.5 424C356 412 354 404 348 399Z" fill="#F3E4CB" stroke="#173F32" stroke-opacity=".3"/><circle cx="358" cy="426" r="4" fill="#C68E5E"/></g>
+          <rect x="292" y="414" width="84" height="14" rx="3" fill="#7A5640"/><rect x="292" y="414" width="84" height="3" rx="1.5" fill="#B9834A"/>
+          <path d="M296 300L320 300L290 332Z M330 300L346 300L296 360Z" fill="#fff" opacity=".18"/>
+          <!-- door -->
+          <path d="M206 488V335A34 34 0 0 1 274 335V488Z" fill="#FDF4E8"/><path d="M212 488V335A28 28 0 0 1 268 335V488Z" fill="#0F2B22"/>
+          <ellipse cx="240" cy="440" rx="30" ry="48" fill="url(#glow)" opacity=".3"/>
+          <!-- street lamp -->
+          <rect x="426" y="392" width="6" height="96" fill="#173F32"/><circle class="halo" cx="429" cy="384" r="28" fill="url(#glow)" opacity=".5"/><circle cx="429" cy="384" r="11" fill="#C99A3B" stroke="#173F32" stroke-width="3"/>
+          <!-- ground -->
+          <g mask="url(#groundMask)"><rect x="0" y="488" width="640" height="72" fill="#EAD7B7"/><rect x="0" y="488" width="640" height="5" fill="#C9AE84" opacity=".5"/><rect x="0" y="522" width="640" height="38" fill="#E2CBA6"/><path d="M0 541H640" stroke="#FDF4E8" stroke-width="4" stroke-dasharray="26 20"/></g>
+
+          <!-- customers and effects are created by script.js -->
+          <g id="people"></g>
+          <g id="fx"></g>
+        </svg>
+      </div>
+      <p class="scene-cap" id="sceneCap" aria-live="polite">Amina is picking up a linen abaya.</p>
+      <ol class="scene-steps" aria-label="How a MEEM order gives back">
+        <li class="on"><span>1</span>Someone shops</li><li><span>2</span>A share is set aside</li><li><span>3</span>A family is helped</li>
+      </ol>
+      <p class="scene-note">Live illustration</p>
+    </div>
+  </div>
+</section>

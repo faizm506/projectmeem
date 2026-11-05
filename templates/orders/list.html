@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}My orders | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap mid">
+  <h1 style="margin-bottom:22px">My orders<span class="stop">.</span></h1>
+  {% if orders %}
+  <div class="table-wrap"><table class="table"><thead><tr><th>Order</th><th>Date</th><th>Items</th><th>Total</th><th>Status</th></tr></thead><tbody>
+    {% for o in orders %}<tr><td><a class="linkbtn" href="{{ o.get_absolute_url }}">{{ o.number }}</a></td><td>{{ o.created_at|date:"d M Y" }}</td><td>{{ o.items.count }}</td><td>{{ o.total_minor|money }}</td>
+      <td><span class="badge {% if o.status == 'paid' %}badge-ok{% elif o.status == 'pending' %}badge-warn{% else %}badge-no{% endif %}">{{ o.get_status_display }}</span></td></tr>{% endfor %}
+  </tbody></table></div>
+  {% else %}<div class="notice">No orders yet. <a class="linkbtn" href="{% url 'catalog:list' %}">Start shopping</a>.</div>{% endif %}
+</div></section>
+{% endblock %}

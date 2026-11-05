@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+{% block title %}Join MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap narrow">
+  <span class="eyebrow">Join MEEM</span><h1 style="margin:14px 0 8px">Create your account<span class="stop">.</span></h1>
+  <p class="sub" style="margin-bottom:24px">Shop Muslim-owned brands, or open a shop of your own.</p>
+  <form method="post" class="form-card">{% csrf_token %}
+    {% include "_fields.html" %}
+    <input class="hp" type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+    <p class="safe-note"><svg class="ic"><use href="#i-shield"/></svg>Use a long, unique password (10+ characters). We never see it in plain text.</p>
+    <button class="btn btn-p" type="submit">Create account</button>
+    <p class="small muted mt">Already have an account? <a class="linkbtn" href="{% url 'accounts:login' %}">Log in</a></p>
+  </form>
+</div></section>
+{% endblock %}

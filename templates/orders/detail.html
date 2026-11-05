@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Order {{ order.number }} | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap mid">
+  {% if order.status == 'paid' %}{% include "_stepper.html" with step=4 %}{% endif %}
+  <span class="eyebrow">Order</span>
+  <div class="row between" style="margin:12px 0 22px"><h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">{{ order.number }}</h1>
+    <span class="badge {% if order.status == 'paid' %}badge-ok{% elif order.status == 'pending' %}badge-warn{% else %}badge-no{% endif %}">{{ order.get_status_display }}</span></div>
+  {% if order.status == 'pending' %}<div class="notice row between" style="margin-bottom:20px"><span>This order is waiting for payment.</span><a class="btn btn-p btn-sm" href="{% url 'payments:start' order.number %}">Pay now</a></div>{% endif %}
+  {% if order.status == 'paid' %}<div class="notice green" style="margin-bottom:20px;display:flex;gap:10px;align-items:center"><span class="pulse"></span><span>Thank you. {{ order.donation_minor|money }} was set aside from this order. <a class="linkbtn" style="color:var(--gold-l)" href="{% url 'donations:impact' %}">See the impact</a></span></div>{% endif %}
+  <div class="layout2">
+    <div class="card">
+      <h3 style="margin-bottom:12px">Items</h3>
+      {% for item in order.items.all %}
+      <div class="cartline" style="grid-template-columns:1fr auto"><div><strong>{{ item.title }}</strong> <span class="muted">x {{ item.quantity }}</span><br><span class="small muted">{{ item.shop.name }}</span>
+        {% if order.status == 'paid' %}<br><span class="badge {% if item.fulfil_status == 'delivered' %}badge-ok{% elif item.fulfil_status == 'shipped' %}badge-warn{% endif %}">{{ item.get_fulfil_status_display }}</span>{% if item.tracking_number %} <span class="small muted">Tracking: {{ item.tracking_number }}</span>{% endif %}{% endif %}</div>
+        <strong>{{ item.line_total_minor|money }}</strong></div>{% endfor %}
+      <div class="kv mt"><span>Items</span><span>{{ order.subtotal_minor|money }}</span><span>Shipping</span><span>{{ order.shipping_minor|money }}</span><span class="total">Total</span><span class="total">{{ order.total_minor|money }}</span></div>
+    </div>
+    <div>
+      <div class="card"><h3 style="margin-bottom:10px">Ship to</h3><p>{{ order.ship_name }}<br>{{ order.ship_line1 }}{% if order.ship_line2 %}<br>{{ order.ship_line2 }}{% endif %}<br>{{ order.ship_city }}, {{ order.ship_state }} {{ order.ship_pincode }}<br>{{ order.ship_country }}<br>{{ order.ship_phone }}</p></div>
+      {% if order.status == 'paid' %}
+      <div class="card mt"><h3 style="margin-bottom:10px">Something wrong?</h3>
+        {% for d in order.disputes.all %}<p class="small muted">Reported {{ d.created_at|date:"d M" }}: {{ d.get_status_display }}</p>{% endfor %}
+        <form method="post" action="{% url 'orders:dispute' order.number %}">{% csrf_token %}
+          <div class="field"><label for="{{ dispute_form.reason.id_for_label }}">{{ dispute_form.reason.label }}</label>{{ dispute_form.reason }}</div>
+          <button class="btn btn-o btn-sm" type="submit">Report a problem</button></form>
+      </div>{% endif %}
+    </div>
+  </div>
+</div></section>
+{% endblock %}

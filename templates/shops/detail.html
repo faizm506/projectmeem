@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}{{ shop.name }} | MEEM{% endblock %}
+{% block content %}
+<section class="pagehead"><div class="wrap">
+  <span class="eyebrow">Shop</span><h1 style="margin:14px 0 8px">{{ shop.name }}<span class="stop">.</span></h1>
+  <p class="muted">{{ shop.tagline }}{% if shop.city %} &middot; {{ shop.city }}{% endif %}</p>
+  {% if shop.story %}<p class="sub" style="white-space:pre-line">{{ shop.story }}</p>{% endif %}
+  <div class="pgrid mt2">{% for product in products %}{% include "catalog/_card.html" %}{% empty %}<div class="notice" style="grid-column:1/-1">No products yet.</div>{% endfor %}</div>
+</div></section>
+{% endblock %}
